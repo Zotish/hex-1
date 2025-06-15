@@ -38,14 +38,14 @@ export const HomeView: FC = ({ }) => {
                   <div className='text-sm font-normal align-bottom text-right text-slate-600 mt-4'>v{pkg.version}</div>
           */}
         <h1 className="text-center text-5xl md:pl-12 font-bold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-fuchsia-500 mb-4">
-          Mint Your Exlusive NFT <br />
+          Mint Your Exlusive HexSkulla NFT <br />
 
         </h1>
         <h2>Only one NFT  allow  to Mint in Per wallet</h2>
 
         </div>
         <h4 className="md:w-full text-2x1 md:text-4xl text-center text-slate-300 my-2">
-          <p>Per NFT : 0.5 SOL</p>
+          <p>Per NFT : 0.1 SOL</p>
           
         </h4>
         {/*
