@@ -1,5 +1,5 @@
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState,useEffect } from 'react';
 import { notify } from "../utils/notifications";
 import useUserSOLBalanceStore from '../stores/useUserSOLBalanceStore';
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults';
@@ -10,9 +10,12 @@ import { mplTokenMetadata } from '@metaplex-foundation/mpl-token-metadata';
 import { setComputeUnitLimit } from '@metaplex-foundation/mpl-toolbox';
 import { clusterApiUrl } from '@solana/web3.js';
 import * as bs58 from 'bs58';
+import { fetchDigitalAsset, fetchAllDigitalAssetByOwner } from '@metaplex-foundation/mpl-token-metadata';
+import { isSome } from '@metaplex-foundation/umi';
+
 
 // These access the environment variables we defined in the .env file
-const quicknodeEndpoint = process.env.NEXT_PUBLIC_RPC || clusterApiUrl('mainnet-beta');
+const quicknodeEndpoint = process.env.NEXT_PUBLIC_RPC || clusterApiUrl('devnet');
 const candyMachineAddress = publicKey(process.env.NEXT_PUBLIC_CANDY_MACHINE_ID);
 const treasury = publicKey(process.env.NEXT_PUBLIC_TREASURY);
 
@@ -21,6 +24,7 @@ export const CandyMint: FC = (props) => {
     const wallet = useWallet();
     const { getUserSOLBalance } = useUserSOLBalanceStore();
     const [count,setCount]=useState(0);
+    const [alreadyMinted, setAlreadyMinted] = useState(false);
 
     const umi = useMemo(() =>
         createUmi(quicknodeEndpoint)
@@ -30,6 +34,36 @@ export const CandyMint: FC = (props) => {
         [wallet, mplCandyMachine, walletAdapterIdentity, mplTokenMetadata, quicknodeEndpoint, createUmi]
     );
 
+    const checkAlreadyMintedInTier = useCallback(async (): Promise<boolean> => {
+        if (!wallet.publicKey) return false;
+    
+        try {
+            const owner = publicKey(wallet.publicKey.toString());
+            const allNfts = await fetchAllDigitalAssetByOwner(umi, owner);
+    
+            const candyMachine = await fetchCandyMachine(umi, candyMachineAddress);
+            const currentCollectionMint = candyMachine.collectionMint.toString();
+    
+            for (const nft of allNfts) {
+                if (isSome(nft.metadata.collection)) {
+                    const collection = nft.metadata.collection.value;
+                    const collectionKey = collection.key.toString();
+                    const isVerified = collection.verified;
+    
+                    if (collectionKey === currentCollectionMint && isVerified) {
+                        console.log('❌ Already minted in this tier.');
+                        return true;
+                    }
+                }
+            }
+    
+            return false;
+        } catch (error) {
+            console.error('Error checking tier minting:', error);
+            return false;
+        }
+    }, [wallet, umi, candyMachineAddress]);
+    
     const onClick = useCallback(async () => {
         if (!wallet.publicKey) {
             console.log('error', 'Wallet not connected!');
@@ -43,6 +77,11 @@ export const CandyMint: FC = (props) => {
             candyMachineAddress,
         );
         // Fetch the Candy Guard.
+        const alreadyMintedInTier = await checkAlreadyMintedInTier();
+        if (alreadyMintedInTier) {
+            notify({ type: 'error', message: 'You have already minted in this tier.' });
+            return;
+        }
         const candyGuard = await safeFetchCandyGuard(
             umi,
             candyMachine.mintAuthority,
@@ -79,7 +118,11 @@ export const CandyMint: FC = (props) => {
         }
     }, [wallet, connection, getUserSOLBalance, umi, candyMachineAddress, treasury]);
   
-
+    useEffect(() => {
+        if (wallet.publicKey) {
+            checkAlreadyMintedInTier().then(setAlreadyMinted);
+        }
+    }, [wallet.publicKey, checkAlreadyMintedInTier]);
     return (
 
         <div className="flex flex-row justify-center align-middle">
@@ -92,7 +135,7 @@ export const CandyMint: FC = (props) => {
                 className="px-8 m-2 btn text-center align-middle animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
                 onClick={onClick}
             >
-                <span>Mint NFT </span>
+                <span>Mint  Bronze NFT </span>
             </button>
         </div>
 

@@ -5,8 +5,8 @@ export default function useQueryContext() {
   const router = useRouter()
   const { cluster } = router.query
 
-  const endpoint = cluster ? (cluster as EndpointTypes) : 'mainnet-beta'
-  const hasClusterOption = endpoint !== 'mainnet'
+  const endpoint = cluster ? (cluster as EndpointTypes) : 'devnet'
+  const hasClusterOption = endpoint !== 'devnet'
   const fmtUrlWithCluster = (url) => {
     if (hasClusterOption) {
       const mark = url.includes('?') ? '&' : '?'
