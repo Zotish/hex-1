@@ -269,13 +269,13 @@
   resolved "https://registry.npmjs.org/@ledgerhq/logs/-/logs-6.10.1.tgz"
   integrity sha512-z+ILK8Q3y+nfUl43ctCPuR4Y2bIxk/ooCQFwZxhtci1EhAtMDzMAx2W25qx8G1PPL9UUOdnUax19+F0OjXoj4w==
 
-"@metaplex-foundation/mpl-candy-machine@^6.0.0-alpha.20":
-  version "6.0.0-alpha.20"
-  resolved "https://registry.yarnpkg.com/@metaplex-foundation/mpl-candy-machine/-/mpl-candy-machine-6.0.0-alpha.20.tgz#fc362d6046fac8bb3f885fbbddb8a7ac8750bc7f"
-  integrity sha512-lgUq4ePJ9QlEfb8vPvalTI1SxTLKkg/QaVXNSaMpN7keEZVP495peCaLRf0sQx2g9Xltmkg8dBQOZGTnJuUt0A==
+"@metaplex-foundation/mpl-candy-machine@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@metaplex-foundation/mpl-candy-machine/-/mpl-candy-machine-6.1.0.tgz#6d194866646fb8818cbb91dc814c26c0dbe25997"
+  integrity sha512-Y58wVkK9kU3ur22xnmYG/IOzJfo450dlUMl8FSuSRThV82IJte11ggtw5fEWIQQO/jhLWsjlkRHn4vd5RGmeGg==
   dependencies:
     "@metaplex-foundation/mpl-token-metadata" "3.0.0-alpha.27"
-    "@metaplex-foundation/mpl-toolbox" "^0.9.0"
+    "@metaplex-foundation/mpl-toolbox" "0.10.0"
     "@noble/hashes" "^1.2.0"
     merkletreejs "^0.3.9"
 
@@ -293,7 +293,7 @@
   dependencies:
     "@metaplex-foundation/mpl-toolbox" "^0.9.0"
 
-"@metaplex-foundation/mpl-toolbox@^0.10.0":
+"@metaplex-foundation/mpl-toolbox@0.10.0", "@metaplex-foundation/mpl-toolbox@^0.10.0":
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/@metaplex-foundation/mpl-toolbox/-/mpl-toolbox-0.10.0.tgz#c7d2f27259e69ab86cc4b7dd55b7bfef11bbed13"
   integrity sha512-84KD1L5cFyw5xnntHwL4uPwfcrkKSiwuDeypiVr92qCUFuF3ZENa2zlFVPu+pQcjTlod2LmEX3MhBmNjRMpdKg==
@@ -548,7 +548,7 @@
   resolved "https://registry.npmjs.org/@noble/ed25519/-/ed25519-1.7.1.tgz"
   integrity sha512-Rk4SkJFaXZiznFyC/t77Q0NKS4FL7TLJJsVG2V2oiEq3kJVeTdxysEe/yRWSpnWMe808XRDJ+VFh5pt/FN5plw==
 
-"@noble/hashes@1.2.0", "@noble/hashes@^1.1.2", "@noble/hashes@~1.2.0":
+"@noble/hashes@1.2.0", "@noble/hashes@~1.2.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@noble/hashes/-/hashes-1.2.0.tgz"
   integrity sha512-FZfhjEDbT5GRswV3C6uvLPHMiVD6lQBmpoX5+eSiPaMTXte/IKqI5dykDxzZB/WBeK/CDuQRBWarPdi3FNY2zQ==
@@ -558,7 +558,7 @@
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.4.0.tgz#45814aa329f30e4fe0ba49426f49dfccdd066426"
   integrity sha512-V1JJ1WTRUqHHrOSh597hURcMqVKVGL/ea3kv0gSnEdsEZ0/+VyPghM1lMNGc00z7CIQorSvbKpuJkxvuHbvdbg==
 
-"@noble/hashes@1.8.0", "@noble/hashes@^1.2.0", "@noble/hashes@^1.4.0":
+"@noble/hashes@1.8.0", "@noble/hashes@^1.1.2", "@noble/hashes@^1.2.0", "@noble/hashes@^1.4.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.8.0.tgz#cee43d801fcef9644b11b8194857695acd5f815a"
   integrity sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==
