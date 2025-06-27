@@ -13,7 +13,7 @@ import * as bs58 from 'bs58';
 import { fetchDigitalAsset, fetchAllDigitalAssetByOwner } from '@metaplex-foundation/mpl-token-metadata';
 import { isSome } from '@metaplex-foundation/umi';
 import { getAccount, getAssociatedTokenAddress } from '@solana/spl-token';
-
+import { PublicKey as Web3PublicKey } from '@solana/web3.js';
 
 
 // These access the environment variables we defined in the .env file
@@ -42,7 +42,7 @@ export const CandyMint: FC = (props) => {
     
         try {
             const ata = await getAssociatedTokenAddress(
-                requiredSPLTokenMint,
+                new Web3PublicKey(requiredSPLTokenMint), // Convert Umi PublicKey to web3.js
                 wallet.publicKey
             );
     
