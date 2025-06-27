@@ -14,6 +14,7 @@ import { CandyMint } from '../../components/CandyMint';
 
 // Store
 import useUserSOLBalanceStore from '../../stores/useUserSOLBalanceStore';
+import Header from 'components/Header';
 
 export const HomeView: FC = ({ }) => {
   const wallet = useWallet();
@@ -30,6 +31,8 @@ export const HomeView: FC = ({ }) => {
   }, [wallet.publicKey, connection, getUserSOLBalance])
 
   return (
+
+
 
     <div className="md:hero mx-auto p-4 align-middle justify-center text-center ">
       <div className="md:hero-content flex flex-col">
@@ -80,5 +83,7 @@ export const HomeView: FC = ({ }) => {
         </div>
       </div>
     </div>
+    
+
   );
 };

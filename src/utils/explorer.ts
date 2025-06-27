@@ -12,8 +12,8 @@ export function getExplorerUrl(
         cluster = `custom&customUrl=${encodeURIComponent(
           'http://127.0.0.1:8899'
         )}`
-      } else if (endpoint === 'https://floral-few-daylight.solana-devnet.quiknode.pro/18130c6ae8625334dc9486df3ee08db65518093a') {
-        cluster = 'devnet'
+      } else if (endpoint === 'https://alien-wispy-energy.solana-mainnet.quiknode.pro/4a29a1118ae5b1afd23fd420b853c6bab0117656/') {
+        cluster = 'mainnet-beta'
       }
   
       return cluster ? `?cluster=${cluster}` : ''

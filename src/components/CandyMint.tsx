@@ -12,12 +12,16 @@ import { clusterApiUrl } from '@solana/web3.js';
 import * as bs58 from 'bs58';
 import { fetchDigitalAsset, fetchAllDigitalAssetByOwner } from '@metaplex-foundation/mpl-token-metadata';
 import { isSome } from '@metaplex-foundation/umi';
+import { getAccount, getAssociatedTokenAddress } from '@solana/spl-token';
+
 
 
 // These access the environment variables we defined in the .env file
-const quicknodeEndpoint = process.env.NEXT_PUBLIC_RPC || clusterApiUrl('devnet');
+const quicknodeEndpoint = process.env.NEXT_PUBLIC_RPC || clusterApiUrl('mainnet-beta');
 const candyMachineAddress = publicKey(process.env.NEXT_PUBLIC_CANDY_MACHINE_ID);
 const treasury = publicKey(process.env.NEXT_PUBLIC_TREASURY);
+const requiredSPLTokenMint = publicKey('64hiNSdNeXr5Wt1BpGDBc5fb4JLszj3kT86CWduzcsZu'); // Replace with your token mint
+const minimumRequiredAmount = 1000000 * 10 ** 6; // 100k tokens, assuming 6 decimals
 
 export const CandyMint: FC = (props) => {
     const { connection } = useConnection();
@@ -33,7 +37,26 @@ export const CandyMint: FC = (props) => {
             .use(mplTokenMetadata()),
         [wallet, mplCandyMachine, walletAdapterIdentity, mplTokenMetadata, quicknodeEndpoint, createUmi]
     );
-
+    const checkSPLTokenBalance = useCallback(async (): Promise<boolean> => {
+        if (!wallet.publicKey) return false;
+    
+        try {
+            const ata = await getAssociatedTokenAddress(
+                requiredSPLTokenMint,
+                wallet.publicKey
+            );
+    
+            const account = await getAccount(connection, ata);
+            const balance = Number(account.amount);
+    
+            console.log(`SPL Token Balance: ${balance}`);
+            return balance >= minimumRequiredAmount;
+        } catch (error) {
+            console.error('SPL Token balance check failed:', error);
+            return false;
+        }
+    }, [wallet.publicKey, connection]);
+    
     const checkAlreadyMintedInTier = useCallback(async (): Promise<boolean> => {
         if (!wallet.publicKey) return false;
     
@@ -76,6 +99,13 @@ export const CandyMint: FC = (props) => {
             umi,
             candyMachineAddress,
         );
+
+        const hasEnoughSPL = await checkSPLTokenBalance();
+if (!hasEnoughSPL) {
+    notify({ type: 'error', message: 'You must hold at least 1M tokens on your wallet to mint.' });
+    return;
+}
+
         // Fetch the Candy Guard.
         const alreadyMintedInTier = await checkAlreadyMintedInTier();
         if (alreadyMintedInTier) {
