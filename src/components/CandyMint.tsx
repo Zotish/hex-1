@@ -13,14 +13,14 @@ import * as bs58 from 'bs58';
 import { fetchDigitalAsset, fetchAllDigitalAssetByOwner } from '@metaplex-foundation/mpl-token-metadata';
 import { isSome } from '@metaplex-foundation/umi';
 import { getAccount, getAssociatedTokenAddress } from '@solana/spl-token';
-import { PublicKey as Web3PublicKey } from '@solana/web3.js';
+import {PublicKey as Web3PublicKey } from '@solana/web3.js';
 
 
 // These access the environment variables we defined in the .env file
 const quicknodeEndpoint = process.env.NEXT_PUBLIC_RPC || clusterApiUrl('mainnet-beta');
 const candyMachineAddress = publicKey(process.env.NEXT_PUBLIC_CANDY_MACHINE_ID);
 const treasury = publicKey(process.env.NEXT_PUBLIC_TREASURY);
-const requiredSPLTokenMint = publicKey('64hiNSdNeXr5Wt1BpGDBc5fb4JLszj3kT86CWduzcsZu'); // Replace with your token mint
+//const requiredSPLTokenMint = publicKey('64hiNSdNeXr5Wt1BpGDBc5fb4JLszj3kT86CWduzcsZu'); // Replace with your token mint
 const minimumRequiredAmount = 1000000 * 10 ** 6; // 100k tokens, assuming 6 decimals
 
 export const CandyMint: FC = (props) => {
@@ -42,7 +42,7 @@ export const CandyMint: FC = (props) => {
     
         try {
             const ata = await getAssociatedTokenAddress(
-                new Web3PublicKey(requiredSPLTokenMint), // Convert Umi PublicKey to web3.js
+                new Web3PublicKey('CwZtPnDPPS8tJwSjKWwQEPxUVf2tdxVpqgiPfmo2pump'), // Convert Umi PublicKey to web3.js
                 wallet.publicKey
             );
     
